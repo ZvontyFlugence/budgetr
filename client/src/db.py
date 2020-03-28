@@ -16,23 +16,14 @@ class Database():
     First_name = StringField(max_length=30)
     Last_name = StringField(max_length=30)
 
-    def createUser(self, email, password, first_name, last_name):
-        newUser = {"email": email,
-                   "password": password,
-                   "first name": first_name,
-                   "last name": last_name}
+    def createUser(self, data):
+        self.users.insert_one(data)
 
-        self.users.insert_one(newUser)
+    def findUser(self, query):
+        return self.users.find_one(query)
 
-    def findUser(self, email):
-        query = {"email": email}
-        self.users.find_one(query)
-
-    def updateUser(self, email, password, first_name, last_name):
-        user = self.findUser(email)
-        newValues = {"$set": {"password": password,
-                   "first name": first_name,
-                   "last name": last_name}}
-        user.update_one(newValues)
+    def updateUser(self, userQuery, updates):
+        user = self.findUser(userQuery)
+        user.update_one(updates)
 
 
