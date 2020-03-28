@@ -3,7 +3,7 @@ import datetime
 class Income:
     Name = ""
     Amount = 0.00
-    Date = datetime(2000, 1, 1)
+    Date = datetime.date(2000, 1, 1)
     IsConsistent = False
     IsSavings = False
 

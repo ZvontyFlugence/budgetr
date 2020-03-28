@@ -1,8 +1,26 @@
+import bcrypt as bcrypt
 import jwt
 import datetime
+from server.dbTest import db
+from server.server import app
 
 
-class AuthSystem():
+class AuthSystem(db.Model):
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    registered_on = db.Column(db.DateTime, nullable=True)
+    admin = db.Column(db.Boolean, nullable=False, default=False)
+
+    def __init__(self, email, password, admin=False):
+        self.email = email
+        self.password = bcrypt.generate_password_hash(
+            password, app.config.get('BCRYPT_LOG_ROUNDS')
+        ).decode()
+        self.registered_on = datetime.datetime.now()
+        self.admin = admin
 
     def encode_auth_token(self, user_id):
         """

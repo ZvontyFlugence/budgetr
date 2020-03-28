@@ -5,7 +5,7 @@ from pprint import pprint
 # connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
 
 
-class Database:
+class db:
     URI = 'mongodb+srv://budgetr:budgetr@cluster0-eibsf.mongodb.net/test?retryWrites=true&w=majority'
     client = MongoClient(URI)
     userdb = client["userdatabase"]

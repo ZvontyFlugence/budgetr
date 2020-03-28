@@ -5,7 +5,7 @@ class Expense:
     Item = ""
     Amount = 0.00
     ExpenseCategory = Category
-    Date = datetime(2000, 1, 1)
+    Date = datetime.date(2000, 1, 1)
 
     def setItem(self, item):
         self.item = item
