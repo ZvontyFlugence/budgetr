@@ -30,9 +30,9 @@ class Database():
 
     def updateUser(self, email, password, first_name, last_name):
         user = self.findUser(email)
-        newvalues = {"$set": {"password": password,
+        newValues = {"$set": {"password": password,
                    "first name": first_name,
                    "last name": last_name}}
-        user.update_one(newvalues)
+        user.update_one(newValues)
 
 

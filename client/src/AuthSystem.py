@@ -1,6 +1,6 @@
 import jwt
 import datetime
-from server import db
+
 
 class AuthSystem():
 
