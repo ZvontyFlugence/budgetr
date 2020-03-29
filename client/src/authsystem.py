@@ -1,8 +1,7 @@
-import bcrypt as bcrypt
+import bcrypt
 import jwt
 import datetime
-from server.dbTest import db
-from server.server import app
+from db import db
 
 
 class AuthSystem(db.Model):

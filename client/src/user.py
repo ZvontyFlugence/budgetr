@@ -1,4 +1,4 @@
-from client.src.Income import Income
+from income import Income
 
 class User():
     ID = 0
@@ -12,6 +12,19 @@ class User():
     TotalExpenses = 0
     TotalIncome = 0
     TotalSavings = 0
+
+    def __init__(self, ID, Username, Email, Password, ReportLink, Categories, Income, Savings, TotalExpenses, TotalIncome, TotalSavings):
+        self.ID = 0
+        self.Username = ""
+        self.Email = ""
+        self.Password = ""
+        self.ReportLink = ""
+        self.Categories = []
+        self.Income = []
+        self.Savings = []
+        self.TotalExpenses = 0
+        self.TotalIncome = 0
+        self.TotalSavings = 0
 
     def setUsername(self, username):
         self.Username = username
