@@ -4,7 +4,7 @@ import datetime
 from db import db
 
 
-class AuthSystem(db.Model):
+class AuthSystem(db):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

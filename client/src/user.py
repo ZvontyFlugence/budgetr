@@ -1,7 +1,6 @@
 from income import Income
 
 class User():
-    ID = 0
     Username = ""
     Email = ""
     Password = ""
@@ -13,18 +12,21 @@ class User():
     TotalIncome = 0
     TotalSavings = 0
 
-    def __init__(self, ID, Username, Email, Password, ReportLink, Categories, Income, Savings, TotalExpenses, TotalIncome, TotalSavings):
-        self.ID = 0
-        self.Username = ""
-        self.Email = ""
-        self.Password = ""
-        self.ReportLink = ""
-        self.Categories = []
+    def __init__(self, Username, Email, Password, ReportLink, Categories, Income, Savings, TotalExpenses, TotalIncome, TotalSavings):
+        self.setUsername(Username)
+        self.setEmail(Email)
+        self.setPassword(Password)
+        self.setLatestReport(ReportLink)
+        self.addCategory(Categories)
         self.Income = []
         self.Savings = []
         self.TotalExpenses = 0
         self.TotalIncome = 0
         self.TotalSavings = 0
+
+    def makeUser(Username, Email, Password, ReportLink, Categories, Income, Savings, TotalExpenses, TotalIncome, TotalSavings):
+        user = User(Username, Email, Password, ReportLink, Categories, Income, Savings, TotalExpenses, TotalIncome, TotalSavings)
+        return user
 
     def setUsername(self, username):
         self.Username = username
@@ -49,7 +51,7 @@ class User():
     def getUserID(self):
         return self.ID
 
-    def getUserUserName(self):
+    def getUserName(self):
         return self.Username
 
     def getUserID(self):
@@ -58,8 +60,20 @@ class User():
     def getUserEmail(self):
         return self.Email
 
+    def getPassword(self):
+        return self.Password
+
+    def getReportLink(self):
+        return self.ReportLink
+
     def getUserCategories(self):
         return self.Categories
+
+    def getIncome(self):
+        return self.Income
+
+    def getSavings(self):
+        return self.Savings
 
     def getUserTotalExpenses(self):
         return self.TotalExpenses

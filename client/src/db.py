@@ -25,21 +25,22 @@ class db:
         user = self.findUser(userQuery)
         user.update_one(updates)
 
-    user = {
-    "ID":1,
-    "Username" : "",
-    "Email" : "",
-    "Password" : "",
-    "ReportLink" : "",
-    "Categories" : [],
-    "Income" : [],
-    "Savings" : [],
-    "TotalExpenses" : 0,
-    "TotalIncome" : 0,
-    "TotalSavings" : 0
-    }
-    check = findUser(userdb, user)
-    print(check)
+    def createDBUser(user):
+        testuser = {
+            "Username": user.getUserName(),
+            "Email": user.getUserEmail(),
+            "Password": user.getPassword(),
+            "ReportLink": user.getReportLink(),
+            "Categories": user.getUserCategories(),
+            "Income": user.getIncome(),
+            "Savings": user.getSavings(),
+            "TotalExpenses": user.getUserTotalExpenses(),
+            "TotalIncome": user.getUserTotalIncome(),
+            "TotalSavings": user.getUserTotalSavings()
+        }
+
+    check = createUser(userdb, createDBUser())
+        ##print(findUser(userdb, testuser));
 
 
 
