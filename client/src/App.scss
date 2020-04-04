@@ -1,0 +1,19 @@
+@import "custom";
+
+.Budgetr {
+    text-align: center;
+  }
+  
+  .Budgetr-logo {
+    height: 20vmin;
+    pointer-events: none;
+  }
+  
+  .Budgetr-header {
+    background-color: #222222;
+    min-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
