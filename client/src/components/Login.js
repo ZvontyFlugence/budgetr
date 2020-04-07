@@ -1,6 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router';
-import { Redirect } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -54,4 +52,4 @@ class Login extends React.Component {
     }
 }
 
-export default withRouter(Login);
+export default Login;

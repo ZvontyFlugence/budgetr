@@ -30,3 +30,23 @@
   .budgetr-nav-dropdown-item:hover {
     color: $primary;
   }
+
+  .budgetr-dashboard-banner {
+    background-color: $primary;
+    color: white;
+    padding: 5px 16px;
+    box-shadow: -1px 10px 15px -10px #000000;
+  }
+
+  .budgetr-category-list {
+    width: 25rem;
+    margin: 0 auto;
+    box-shadow: 10px 10px 20px -5px #000000;
+    text-align: left;
+  }
+
+  .budgetr-category {
+    background-color: $primary;
+    color: white;
+    text-align: left;
+  }

@@ -1,9 +1,24 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import DashboardContent from './dashboard/DashboardContent';
+import Settings from './dashboard/Settings';
 
-function Dashboard() {
-    return (
-        <h1 style={{color: '#71db77', textAlign: 'center'}}>Dashboard</h1>
-    );
+class Dashboard extends React.Component {
+    render() {
+        return (
+            <Container fluid style={{color: '#71db77', textAlign: 'center'}}>
+                <Switch>
+                    <Route exact path="/dashboard">
+                        <DashboardContent />
+                    </Route>
+                    <Route path="/dashboard/settings">
+                        <Settings />
+                    </Route>
+                </Switch>
+            </Container>
+        );
+    }
 }
 
 export default Dashboard;
