@@ -17,7 +17,7 @@ class Register extends React.Component {
     // TODO: Complete Registration Method
     register(event) {
         let {username, email, password, confirm} = this.state;
-
+        
         if (password !== confirm) {
             // TODO: Display Error Message
             return;
@@ -29,8 +29,9 @@ class Register extends React.Component {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password })
         })
-        .then(response => response.json)
-        .then(json => console.log(json));
+        .then(response => response.json())
+        .then(token => localStorage.setItem('token', token))
+        .then(() => window.location.reload());
         
         event.preventDefault();
     }
@@ -45,19 +46,19 @@ class Register extends React.Component {
                             <Form onSubmit={e => this.register(e)}>
                                 <Form.Group controlId="registerUsername">
                                     <Form.Label>Username</Form.Label>
-                                    <Form.Control type="text" placeholder="Username" onChange={e => this.setState({ username: e.target.value, ...this.state })} />
+                                    <Form.Control type="text" placeholder="Username" onChange={e => this.setState({ ...this.state, username: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="registerEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Email" onChange={e => this.setState({ email: e.target.value, ...this.state })} />
+                                    <Form.Control type="email" placeholder="Email" onChange={e => this.setState({ ...this.state, email: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="registerPass">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" onChange={e => this.setState({ password: e.target.value, ...this.state })} />
+                                    <Form.Control type="password" placeholder="Password" onChange={e => this.setState({ ...this.state, password: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="registerConfirmPass">
                                     <Form.Label>Confirm Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Confirm" onChange={e => this.setState({ confirm: e.target.value, ...this.state })} />
+                                    <Form.Control type="password" placeholder="Confirm" onChange={e => this.setState({ ...this.state, confirm: e.target.value })} />
                                 </Form.Group>
                                 <Button variant="primary" type="submit">Register</Button>
                                 <p style={{textAlign: 'center'}}>Already have an account? <a href="/login">Login!</a></p>

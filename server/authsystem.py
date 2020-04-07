@@ -1,19 +1,10 @@
 import bcrypt
 import jwt
 import datetime
-import json
-from bson.json_util import dumps
 from db import Database
 
 
 class AuthSystem():
-    # __tablename__ = "users"
-
-    # id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # email = db.Column(db.String(255), unique=True, nullable=False)
-    # password = db.Column(db.String(255), nullable=False)
-    # registered_on = db.Column(db.DateTime, nullable=True)
-    # admin = db.Column(db.Boolean, nullable=False, default=False)
 
     def __init__(self, email, password, admin=False):
         self.db = Database()
@@ -26,8 +17,9 @@ class AuthSystem():
         query = {"email": self.email}
         user = self.db.findUser(query)
         if user:
-            if bcrypt.checkpw(self.password, user.password):
-                return self.encode_auth_token(user._id)
+            if bcrypt.checkpw(self.password, user["password"]):
+                token = self.encode_auth_token(user)
+                return token.decode('ascii')
             else:
                 return {"error": "Invalid Credentials!"}
         else:
@@ -42,12 +34,12 @@ class AuthSystem():
         inserted_id = self.db.createUser(data)
         if inserted_id is not None:
             user = self.db.findUser({"_id": inserted_id})
-            user_json = dumps(user)
-            return self.encode_auth_token(user_json)
+            token = self.encode_auth_token(user)
+            return token.decode('ascii')
         else:
             return {"error": "Registration Failed!"}
 
-    def encode_auth_token(self, user_json):
+    def encode_auth_token(self, user):
         """
         Generates the Auth Token
         :return: string
@@ -56,7 +48,7 @@ class AuthSystem():
             payload = {
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, seconds=5),
                 'iat': datetime.datetime.utcnow(),
-                'sub': user_json
+                'sub': user["_id"]
             }
             return jwt.encode(
                 payload,

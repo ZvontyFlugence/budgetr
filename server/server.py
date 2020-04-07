@@ -23,7 +23,6 @@ def auth():
 @app.route("/register", methods=["POST"])
 def register():
     credentials = request.json
-    print(credentials)
     auth_system = AuthSystem(credentials["email"], credentials["password"])
-    payload = auth_system.register(credentials["username"])
+    token = auth_system.register(credentials["username"])
     return make_response(jsonify(payload), 200)

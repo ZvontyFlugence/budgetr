@@ -17,3 +17,16 @@
     align-items: center;
     justify-content: center;
   }
+
+  #budgetr-nav-dropdown a {
+    color: $primary;
+  }
+
+  .budgetr-nav-dropdown-item {
+    background-color: $primary;
+    color: white;
+  }
+
+  .budgetr-nav-dropdown-item:hover {
+    color: $primary;
+  }

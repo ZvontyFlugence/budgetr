@@ -16,7 +16,9 @@ class Database:
     users = userdb.users
 
     def createUser(self, data):
+        # Replace with User class and use __dict__ function to send to mongo
         user = {
+            "_id": self.users.estimated_document_count() + 1,
             "username": data["username"],
             "email": data["email"],
             "password": data["hashedpw"],

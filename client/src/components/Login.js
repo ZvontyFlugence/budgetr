@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -9,9 +11,20 @@ class Login extends React.Component {
         password: '',
     };
 
-    // TODO: Complete Login Method
-    login() {
-        // let {email, password} = this.state;
+    login(e) {
+        let {email, password} = this.state;
+
+        // TODO: Use a config to decide what url to see
+        fetch("http://localhost:5000/auth", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        })
+        .then(response => response.json())
+        .then(token => localStorage.setItem('token', token))
+        .then(() => window.location.reload());
+
+        e.preventDefault();
     }
 
     render() {
@@ -21,16 +34,16 @@ class Login extends React.Component {
                     <Card bg="secondary" text="primary" border="primary" style={{width: '30rem', textAlign: 'left'}}>
                         <Card.Body>
                             <Card.Title style={{textAlign: 'center'}}>Login</Card.Title>
-                            <Form>
+                            <Form onSubmit={e => this.login(e)}>
                                 <Form.Group controlId="loginEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Email" />
+                                    <Form.Control type="email" placeholder="Email" onChange={e => this.setState({ ...this.state, email: e.target.value })} />
                                 </Form.Group>
                                 <Form.Group controlId="loginPass">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" />
+                                    <Form.Control type="password" placeholder="Password" onChange={e => this.setState({ ...this.state, password: e.target.value })} />
                                 </Form.Group>
-                                <Button variant="primary">Login</Button>
+                                <Button variant="primary" type="submit">Login</Button>
                                 <p style={{textAlign: 'center'}}>Don't have an account? <a href="/register">Sign up!</a></p>
                             </Form>
                         </Card.Body>
@@ -41,4 +54,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
