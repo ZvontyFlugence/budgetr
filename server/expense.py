@@ -1,34 +1,34 @@
-import datetime
-from category import Category
+# from category import Category
+
 
 class Expense:
-    Item = ""
-    Amount = 0.00
-    ExpenseCategory = Category
-    Date = datetime.date(2000, 1, 1)
+
+    def __init__(self, item, amount, date, expenseCategory=None):
+        self.item = item
+        self.amount = amount
+        self.date = date
+        self.expenseCategory = expenseCategory
 
     def setItem(self, item):
         self.item = item
 
     def setAmount(self, amount):
-        self.Amount = amount
+        self.amount = amount
 
     def setExpenseCategory(self, expenseCategory):
-        self.ExpenseCategory = expenseCategory
+        self.expenseCategory = expenseCategory
 
     def setDate(self, date):
-        self.Date = date
+        self.date = date
 
     def getitem(self):
         return self.item
 
     def getAmount(self):
-        return self.Amount
+        return self.amount
 
     def getExpenseCategory(self):
-        return self.ExpenseCategory
+        return self.expenseCategory
 
     def getDate(self):
-        return self.Date
-
-
+        return self.date

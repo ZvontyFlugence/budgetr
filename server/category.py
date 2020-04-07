@@ -1,34 +1,34 @@
-
-
 class Category:
-    Name = ""
-    Limit = 0
-    Spent = 0
-    Expenses = []
+
+    def __init__(self, name, limit, spent, expenses=[]):
+        self.name = name
+        self.limit = limit
+        self.spent = spent
+        self.expenses = expenses
 
     def setName(self, name):
-        self.Name = name
+        self.name = name
 
     def setLimit(self, limit):
-        self.Limit = limit
+        self.limit = limit
 
     def addExpense(self, expense):
-        self.Expenses.append(expense)
+        self.expenses.append(expense)
 
     def removeExpense(self, expense):
-        for i in range(0, len(self.Expenses) - 1):
-            if (expense == self.Expenses[i]):
-                while ((i < len(self.Expenses) - 1) and (self.Categories[i+1] != None)):
-                    self.Expenses[i] = self.Expenses[i + 1]
+        for i in range(0, len(self.expenses) - 1):
+            if (expense == self.expenses[i]):
+                while ((i < len(self.expenses) - 1) and (self.categories[i+1] is not None)):
+                    self.expenses[i] = self.expenses[i + 1]
 
     def getName(self):
-        return self.Name
+        return self.name
 
     def getLimit(self):
-        return self.Limit
+        return self.limit
 
     def getSpent(self):
-        return self.Spent
+        return self.spent
 
     def getExpenses(self):
-        return self.Expenses
+        return self.expenses
