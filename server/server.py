@@ -25,4 +25,4 @@ def register():
     credentials = request.json
     auth_system = AuthSystem(credentials["email"], credentials["password"])
     token = auth_system.register(credentials["username"])
-    return make_response(jsonify(payload), 200)
+    return make_response(jsonify(token), 200)

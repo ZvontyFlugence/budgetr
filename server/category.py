@@ -1,6 +1,6 @@
 class Category:
 
-    def __init__(self, name, limit, spent, expenses=[]):
+    def __init__(self, name, limit, spent=0.0, expenses=[]):
         self.name = name
         self.limit = limit
         self.spent = spent

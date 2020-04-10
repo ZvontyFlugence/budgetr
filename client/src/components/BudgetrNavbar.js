@@ -22,7 +22,7 @@ class BudgetrNavbar extends React.Component {
             </NavDropdown>
         );
         return (
-            <Navbar className="Budgetr-navbar">
+            <Navbar className="Budgetr-navbar" collapseOnSelect expand="lg">
                 <Navbar.Brand href="/">
                     <img src={banner} width="150" className="d-inline-block align-top" alt="Budgetr" />
                 </Navbar.Brand>

@@ -10,6 +10,7 @@ import Index from './components/Index';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import Settings from './components/Settings';
 import './App.scss';
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path="/dashboard">
           {!localStorage.getItem('token') ? <Redirect from="/dashboard" to="/" /> : <Dashboard />}
+        </Route>
+        <Route path="/settings">
+          {!localStorage.getItem('token') ? <Redirect from ="/settings" to="/" /> : <Settings />}
         </Route>
       </Switch>
     </Router>

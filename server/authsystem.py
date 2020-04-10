@@ -9,7 +9,7 @@ class AuthSystem():
     def __init__(self, email, password, admin=False):
         self.db = Database()
         self.email = email
-        self.password = bytes(password, encoding='utf-8')
+        self.password = password.encode('ascii')
         self.registered_on = datetime.datetime.now()
         self.admin = admin
 
@@ -17,7 +17,7 @@ class AuthSystem():
         query = {"email": self.email}
         user = self.db.findUser(query)
         if user:
-            if bcrypt.checkpw(self.password, user["password"]):
+            if bcrypt.checkpw(self.password, user["password"].encode('ascii')):
                 token = self.encode_auth_token(user)
                 return token.decode('ascii')
             else:
@@ -29,7 +29,7 @@ class AuthSystem():
         data = {
             "username": username,
             "email": self.email,
-            "hashedpw": bcrypt.hashpw(self.password, bcrypt.gensalt())
+            "hashedpw": bcrypt.hashpw(self.password, bcrypt.gensalt()).decode('ascii')
         }
         inserted_id = self.db.createUser(data)
         if inserted_id is not None:
