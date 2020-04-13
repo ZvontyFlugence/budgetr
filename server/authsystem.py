@@ -58,16 +58,18 @@ class AuthSystem():
         except Exception as e:
             return {"error": str(e)}
 
-    def decode_auth_token(auth_token):
+    @staticmethod
+    def validate_token(token):
         """
         Decodes the auth token
-        :param auth_token:
+        :param token:
         :return: integer|string
         """
+        auth_token = token.replace("Bearer ", "")
         try:
             payload = jwt.decode(auth_token, 'BUDGETR_SECRET_KEY')
             return payload['sub']
         except jwt.ExpiredSignatureError:
-            return 'Signature expired. Please log in again.'
+            return {'error': 'Signature expired. Please log in again.'}
         except jwt.InvalidTokenError:
-            return 'Invalid token. Please log in again.'
+            return {'error': 'Invalid token. Please log in again.'}

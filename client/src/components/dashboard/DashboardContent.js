@@ -24,8 +24,18 @@ class DashboardContent extends React.Component {
     }
 
     submitAddCategory = () => {
-        // let { name, limit } = this.state;        
+        let { name, limit } = this.state;        
         // TODO: Use Fetch to Call API to create new budget category
+        fetch('http://localhost:5000/create-category', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ name, limit })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
     }
 
     render() {
