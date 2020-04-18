@@ -3,16 +3,38 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Accordion from 'react-bootstrap/Accordion';
+
+import CategoryCard from './CategoryCard';
 
 class DashboardContent extends React.Component {
 
     state = {
         showAddCategoryModal: false,
+        showAddIncomeModal: false,
+        showAddExpenseModal: false,
         name: "",
         limit: 0.00,
+        categories: [],
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:5000/user', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token'),
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            let user = data.user;
+            if (user) {
+                this.setState({ ...this.state, categories: user.categories });
+            }
+        });
     }
 
     showAddCategoryModal = () => {
@@ -23,9 +45,24 @@ class DashboardContent extends React.Component {
         this.setState({ ...this.state, showAddCategoryModal: false });
     }
 
+    showAddIncomeModal = () => {
+        this.setState({ ...this.state, showAddIncomeModal: true });
+    }
+
+    hideAddIncomeModal = () => {
+        this.setState({ ...this.state, showAddIncomeModal: false });
+    }
+
+    showAddExpenseModal = () => {
+        this.setState({ ...this.state, showAddExpenseModal: true });
+    }
+
+    hideAddExpenseModal = () => {
+        this.setState({ ...this.state, showAddExpenseModal: false });
+    }
+
     submitAddCategory = () => {
-        let { name, limit } = this.state;        
-        // TODO: Use Fetch to Call API to create new budget category
+        let { name, limit } = this.state;
         fetch('http://localhost:5000/create-category', {
             method: "POST",
             headers: {
@@ -35,7 +72,21 @@ class DashboardContent extends React.Component {
             body: JSON.stringify({ name, limit })
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            if (!data.success) {
+                console.log(data.error);
+            } else {
+                window.location.reload();
+            }
+        })
+    }
+    
+    submitAddIncome = () => {
+
+    }
+
+    submitAddExpense = () => {
+
     }
 
     render() {
@@ -44,7 +95,8 @@ class DashboardContent extends React.Component {
                 <Row className="budgetr-dashboard-banner">
                     <h4>Dashboard</h4>
                     <div className="ml-auto">
-                        <Button variant="primary">Add Income</Button>
+                        <Button variant="primary" onClick={this.showAddExpenseModal}>Add Expense</Button>
+                        <Button variant="primary" onClick={this.showAddIncomeModal}>Add Income</Button>
                         <Button variant="primary">Generate Statement</Button>
                     </div>
                 </Row>
@@ -59,8 +111,9 @@ class DashboardContent extends React.Component {
                                     </Col>
                                 </Row>
                             </Card.Header>
-                            <ListGroup variant="flush">
-                            </ListGroup>
+                            <Accordion style={{ width: '100%' }}>
+                                {this.state.categories && this.state.categories.map((cat, id) => <CategoryCard key={id} name={cat.name} limit={cat.limit} />)}
+                            </Accordion>
                         </Card>
                     </Col>
                     <Col>Col 2</Col>
@@ -87,6 +140,37 @@ class DashboardContent extends React.Component {
                     <Modal.Footer>
                         <Button variant="primary" onClick={this.submitAddCategory}>Add Category</Button>
                         <Button variant="secondary" onClick={this.hideAddCategoryModal}>Cancel</Button>
+                    </Modal.Footer>
+                </Modal>
+                <Modal show={this.state.showAddIncomeModal} onHide={this.hideAddIncomeModal}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Income</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group controlId="incomeName">
+                                <Form.Label>Income Name</Form.Label>
+                                <Form.Control type="text" />
+                            </Form.Group>
+                            <Form.Group controlId="incomeDate">
+                                <Form.Label>Income Date</Form.Label>
+                                <Form.Control type="date" />
+                            </Form.Group>
+                            <Form.Group controlId="incomeAmount">
+                                <Form.Label>Income Amount</Form.Label>
+                                <Form.Control type="number" />
+                            </Form.Group>
+                            <Form.Group controlId="incomeConsistant">
+                                <Form.Check type="switch" label="Is Consistant?" />
+                            </Form.Group>
+                            <Form.Group controlId="incomeSaving">
+                                <Form.Check type="switch" label="Is Savings?" />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={this.submitAddIncome}>Add Income</Button>
+                        <Button variant="secondary" onClick={this.hideAddIncomeModal}>Cancel</Button>
                     </Modal.Footer>
                 </Modal>
             </div>

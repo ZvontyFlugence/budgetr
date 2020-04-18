@@ -8,6 +8,10 @@
     height: 20vmin;
     pointer-events: none;
   }
+
+  .budgetr-nav-logo {
+    height: 5vh;
+  }
   
   .Budgetr-header {
     background-color: #222222;
@@ -39,7 +43,7 @@
   }
 
   .budgetr-category-list {
-    width: 25rem;
+    width: 25vw;
     margin: 0 auto;
     box-shadow: 10px 10px 20px -5px #000000;
     text-align: left;
@@ -49,4 +53,14 @@
     background-color: $primary;
     color: white;
     text-align: left;
+  }
+
+  .category-card {
+    background-color: $primary;
+    color: white;
+    padding: 5px 10px;
+  }
+
+  .category-card:hover {
+    cursor: pointer;
   }

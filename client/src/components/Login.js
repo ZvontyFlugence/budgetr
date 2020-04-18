@@ -19,7 +19,7 @@ class Login extends React.Component {
             body: JSON.stringify({ email, password })
         })
         .then(response => response.json())
-        .then(token => localStorage.setItem('token', token))
+        .then(data => localStorage.setItem('token', data.token))
         .then(() => window.location.reload());
 
         e.preventDefault();

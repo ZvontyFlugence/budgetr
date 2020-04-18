@@ -40,5 +40,5 @@ class Database:
         return self.users.find_one(query)
 
     def updateUser(self, userQuery, updates):
-        user = self.findUser(userQuery)
-        user.update_one(updates)
+        result = self.users.update_one(userQuery, {"$set": updates})
+        return result.modified_count == 1
