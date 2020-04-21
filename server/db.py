@@ -1,12 +1,7 @@
 from pymongo import MongoClient
 # from mongoengine import *
 # import unittest
-
-# from user import User
-# pprint library is used to make the output look more pretty
-# from pprint import pprint
-# connect to MongoDB, change the << MONGODB URL >>
-# to reflect your own connection string
+from user import User
 
 
 class Database:
@@ -16,21 +11,9 @@ class Database:
     users = userdb.users
 
     def createUser(self, data):
-        # Replace with User class and use __dict__ function to send to mongo
-        user = {
-            "_id": self.users.estimated_document_count() + 1,
-            "username": data["username"],
-            "email": data["email"],
-            "password": data["hashedpw"],
-            "reportLink": "",
-            "categories": [],
-            "income": [],
-            "savings": [],
-            "totalExpenses": 0.00,
-            "totalIncome": 0.00,
-            "totalSavings": 0.00
-        }
-        insert_result = self.users.insert_one(user)
+        next_id = self.users.estimated_document_count() + 1
+        user = User(next_id, data["username"], data["email"], data["hashedpw"])
+        insert_result = self.users.insert_one(user.as_dict())
         if insert_result.acknowledged:
             return insert_result.inserted_id
         else:

@@ -1,4 +1,7 @@
-class Category:
+from expense import Expense
+
+
+class Category():
 
     def __init__(self, name, limit, spent=0.0, expenses=[]):
         self.name = name
@@ -14,6 +17,7 @@ class Category:
 
     def addExpense(self, expense):
         self.expenses.append(expense)
+        self.spent += expense.amount
 
     def removeExpense(self, expense):
         for i in range(0, len(self.expenses) - 1):
@@ -32,3 +36,21 @@ class Category:
 
     def getExpenses(self):
         return self.expenses
+
+    def as_dict(self):
+        return {
+            'name': self.name,
+            'limit': self.limit,
+            'spent': self.spent,
+            'expenses': list(map(lambda expense: expense.__dict__, self.expenses))
+        }
+
+    @staticmethod
+    def from_dict(dict):
+        this = Category(dict["name"], dict["limit"])
+        for key in dict:
+            if key == "expenses":
+                setattr(this, key, list(map(lambda exp: Expense.from_dict(exp), dict[key])))
+            else:
+                setattr(this, key, dict[key])
+        return this

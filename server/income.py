@@ -5,7 +5,7 @@ class Income:
         self.amount = amount
         self.date = date,
         self.isConsistent = isConsistent
-        self.isSavings
+        self.isSavings = isSavings
 
     def Name(self, name):
         self.name = name
@@ -36,3 +36,10 @@ class Income:
 
     def getIsSavings(self):
         return self.isSavings
+
+    @staticmethod
+    def from_dict(dict):
+        this = Income(dict["name"], dict["amount"], dict["date"])
+        for key in dict:
+            setattr(this, key, dict[key])
+        return this

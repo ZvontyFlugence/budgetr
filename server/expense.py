@@ -3,7 +3,7 @@
 
 class Expense:
 
-    def __init__(self, item, amount, date, expenseCategory=None):
+    def __init__(self, item, amount, date, expenseCategory="Miscellaneous"):
         self.item = item
         self.amount = amount
         self.date = date
@@ -32,3 +32,10 @@ class Expense:
 
     def getDate(self):
         return self.date
+
+    @staticmethod
+    def from_dict(dict):
+        this = Expense(dict["item"], dict["amount"], dict["date"])
+        for key in dict:
+            setattr(this, key, dict[key])
+        return this
