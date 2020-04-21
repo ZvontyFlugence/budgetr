@@ -28,6 +28,7 @@ class BudgetrNavbar extends React.Component {
                     this.setState({ username: user.username });
                 }
             })
+            .catch(error => this.logout())
         }
     }
     

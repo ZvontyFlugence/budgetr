@@ -145,7 +145,7 @@ class DashboardContent extends React.Component {
         return (
             <div id="budgetr-dashboard-content">
                 <Row className="budgetr-dashboard-banner">
-                    <h4>Dashboard</h4>
+                    <h4 style={{paddingTop: 5}}>Dashboard</h4>
                     <div className="ml-auto">
                         <Button variant="primary" onClick={this.showAddExpenseModal}>Add Expense</Button>
                         <Button variant="primary" onClick={this.showAddIncomeModal}>Add Income</Button>
@@ -165,7 +165,7 @@ class DashboardContent extends React.Component {
                             </Card.Header>
                             <Accordion style={{ width: '100%' }}>
                                 {this.state.categories && this.state.categories.map((cat, id) => (
-                                <CategoryCard key={id} name={cat.name} limit={cat.limit} spent={cat.spent} expenses={cat.expenses} />
+                                <CategoryCard key={id} cat={cat} />
                                 ))}
                             </Accordion>
                         </Card>
@@ -236,8 +236,8 @@ class DashboardContent extends React.Component {
                             <Form.Group controlId="expenseCategory">
                                 <Form.Label>Expense Category</Form.Label>
                                 <Form.Control as="select" onChange={e => this.setState({ ...this.state, expenseCategory: e.target.value })} >
-                                    {this.state.categories.map(cat => (
-                                        <option>{cat.name}</option>
+                                    {this.state.categories.map((cat, id) => (
+                                        <option key={id}>{cat.name}</option>
                                     ))}
                                 </Form.Control>
                             </Form.Group>
