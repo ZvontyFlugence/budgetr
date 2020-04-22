@@ -1,0 +1,1 @@
+web: cd server && waitress-serve --call 'server:app'
