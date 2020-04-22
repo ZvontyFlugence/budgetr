@@ -35,10 +35,17 @@ class User():
     def addIncome(self, income):
         if income.isSavings:
             self.savings.append(income)
-            self.updateTotalSavings(income.amount)
+            self.updateTotalSavings(income.getAmount())
         else:
             self.income.append(income)
-            self.updateTotalIncome(income.amount)
+            self.updateTotalIncome(income.getAmount())
+
+    def removeIncome(self, income_index, isSavings):
+        income = self.savings.pop(income_index) if isSavings else self.income.pop(income_index)
+        if isSavings:
+            self.updateTotalSavings(0 - income.getAmount())
+        else:
+            self.updateTotalIncome(0 - income.getAmount())
 
     def setLatestReport(self, reportLink):
         self.reportLink = reportLink

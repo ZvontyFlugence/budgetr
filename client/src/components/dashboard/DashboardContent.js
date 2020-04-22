@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Accordion from 'react-bootstrap/Accordion';
 
 import CategoryCard from './CategoryCard';
+import IncomeCard from './IncomeCard';
 
 class DashboardContent extends React.Component {
 
@@ -21,7 +22,7 @@ class DashboardContent extends React.Component {
         incomeName: "",
         incomeDate: Date.now(),
         incomeAmount: 0.00,
-        incomeConsistant: true,
+        incomeConsistent: true,
         incomeSaving: false,
         expenseCategory: "",
         expenseName: "",
@@ -91,7 +92,7 @@ class DashboardContent extends React.Component {
     }
     
     submitAddIncome = () => {
-        let { incomeName, incomeAmount, incomeDate, incomeConsistant, incomeSaving } = this.state;
+        let { incomeName, incomeAmount, incomeDate, incomeConsistent, incomeSaving } = this.state;
         fetch('http://localhost:5000/add-income', {
             method: "POST",
             headers: {
@@ -102,7 +103,7 @@ class DashboardContent extends React.Component {
                 name: incomeName,
                 amount: incomeAmount,
                 date: incomeDate,
-                isConsistant: incomeConsistant,
+                isConsistent: incomeConsistent,
                 isSavings: incomeSaving
             })
         })
@@ -114,6 +115,7 @@ class DashboardContent extends React.Component {
                 window.location.reload();
             }
         })
+        .catch(err => console.log(err));
     }
 
     submitAddExpense = () => {
@@ -145,7 +147,7 @@ class DashboardContent extends React.Component {
         return (
             <div id="budgetr-dashboard-content">
                 <Row className="budgetr-dashboard-banner">
-                    <h4 style={{paddingTop: 5}}>Dashboard</h4>
+                    <h4 style={{ paddingTop: 5 }}>Dashboard</h4>
                     <div className="ml-auto">
                         <Button variant="primary" onClick={this.showAddExpenseModal}>Add Expense</Button>
                         <Button variant="primary" onClick={this.showAddIncomeModal}>Add Income</Button>
@@ -168,12 +170,52 @@ class DashboardContent extends React.Component {
                             </Card.Header>
                             <Accordion style={{ width: '100%' }}>
                                 {this.state.user && this.state.user.categories.map((cat, id) => (
-                                <CategoryCard key={id} cat={cat} />
+                                    <CategoryCard key={id} cat={cat} />
                                 ))}
                             </Accordion>
                         </Card>
                     </Col>
-                    <Col>Col 2</Col>
+                    <Col>
+                        <Card bg="secondary" text="primary" border="primary" className="budgetr-category-list">
+                            <Card.Header>
+                                <Row>
+                                    <Col style={{lineHeight: 2}}>Income: {this.state.user && `$${(this.state.user.totalIncome + this.state.user.totalSavings).toLocaleString('en-US', { minimumFractionDigits: 2 })} Total`}</Col>
+                                </Row>
+                            </Card.Header>
+                            <Accordion style={{ width: '100%' }}>
+                                <Card className="category-card">
+                                    <Accordion.Toggle as="div" variant="link" eventKey='income'>
+                                        <Row>
+                                            <Col><span>Income</span></Col>
+                                            <Col>
+                                                <span style={{ textAlign: 'right' }}>
+                                                    ${this.state.user && this.state.user.totalIncome.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                                </span>
+                                            </Col>
+                                        </Row>
+                                    </Accordion.Toggle>
+                                    {this.state.user && this.state.user.income.map((inc, id) => (
+                                        <IncomeCard key={id} income={inc} />
+                                    ))}
+                                </Card>
+                                <Card className="category-card">
+                                    <Accordion.Toggle as="div" variant="link" eventKey='savings'>
+                                        <Row>
+                                            <Col><span>Savings</span></Col>
+                                            <Col>
+                                                <span style={{ textAlign: 'right' }}>
+                                                    ${this.state.user && this.state.user.totalSavings.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                                                </span>
+                                            </Col>
+                                        </Row>
+                                    </Accordion.Toggle>
+                                    {this.state.user && this.state.user.savings.map((sav, id) => (
+                                        <IncomeCard key={id} income={sav} />
+                                    ))}
+                                </Card>
+                            </Accordion>
+                        </Card>
+                    </Col>
                 </Row>
                 <Row>
                     <p style={{margin: '0 auto', paddingTop: '5vh'}}>Row 3</p>
@@ -217,11 +259,11 @@ class DashboardContent extends React.Component {
                                 <Form.Label>Income Amount</Form.Label>
                                 <Form.Control type="number" onChange={e => this.setState({ ...this.state, incomeAmount: parseFloat(e.target.value) })} />
                             </Form.Group>
-                            <Form.Group controlId="incomeConsistant">
-                                <Form.Check type="switch" label="Is Consistant?" onChange={e => this.setState({ ...this.state, incomeConsistant: e.target.value })} />
+                            <Form.Group controlId="incomeConsistent">
+                                <Form.Check type="switch" label="Is Consistent?" checked={this.state.incomeConsistent} onChange={e => this.setState({ ...this.state, incomeConsistent: !this.state.incomeConsistent })} />
                             </Form.Group>
                             <Form.Group controlId="incomeSaving">
-                                <Form.Check type="switch" label="Is Savings?" onChange={e => this.setState({ ...this.state, incomeSaving: e.target.value })} />
+                                <Form.Check type="switch" label="Is Savings?" checked={this.state.incomeSaving} onChange={e => this.setState({ ...this.state, incomeSaving: !this.state.incomeSaving })} />
                             </Form.Group>
                         </Form>
                     </Modal.Body>

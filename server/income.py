@@ -7,7 +7,7 @@ class Income:
         self.isConsistent = isConsistent
         self.isSavings = isSavings
 
-    def Name(self, name):
+    def setName(self, name):
         self.name = name
 
     def setAmount(self, amount):

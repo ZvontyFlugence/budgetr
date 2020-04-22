@@ -19,7 +19,13 @@ class Login extends React.Component {
             body: JSON.stringify({ email, password })
         })
         .then(response => response.json())
-        .then(data => localStorage.setItem('token', data.token))
+        .then(data => {
+            if (data.status_code === 200) {
+                localStorage.setItem('token', data.token);
+            } else {
+                console.log(data.error);
+            }
+        })
         .then(() => window.location.reload());
 
         e.preventDefault();

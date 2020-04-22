@@ -93,7 +93,7 @@ export default function CategoryCard(props) {
       body: JSON.stringify({
         item: expenseData.item || activeExpense.item,
         amount: expenseData.amount || activeExpense.amount,
-        date: expenseData.date || activeExpense.date,
+        date: expenseData.date[0] || activeExpense.date,
         expenseCategory: expenseData.expenseCategory || activeExpense.expenseCategory,
         oldCat,
         oldItem,
@@ -161,14 +161,14 @@ export default function CategoryCard(props) {
             Edit Category
           </Button>
           {props.cat.expenses.map((expense, id) => {
-            let date = new Date(Date.parse(expense.date))
+            let date = new Date(Date.parse(expense.date.replace(/-/g, '/')))
             return (
               <Row key={id} style={{fontSize: 12}} onClick={() => editExpense(expense)}>
                 <Col xs={5}>{expense.item}</Col>
-                <Col xs={4} style={{textAlign: 'center'}}>{date.getMonth()+1}/{date.getDate()+1}/{date.getFullYear()}</Col>
+                <Col xs={4} style={{textAlign: 'center'}}>{date.getMonth()+1}/{date.getDate()}/{date.getFullYear()}</Col>
                 <Col xs={3} style={{textAlign: 'right'}}>${expense.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</Col>
               </Row>
-            )
+            );
           })}
         </Card.Body>
       </Accordion.Collapse>

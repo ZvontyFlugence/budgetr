@@ -22,6 +22,14 @@
   justify-content: center;
 }
 
+.budgetr-centered {
+  margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 #budgetr-nav-dropdown a {
   color: $primary;
 }
@@ -43,7 +51,7 @@
 }
 
 .budgetr-category-list {
-  width: 25vw;
+  width: 35vw;
   margin: 0 auto;
   box-shadow: 10px 10px 20px -5px #000000;
   text-align: left;

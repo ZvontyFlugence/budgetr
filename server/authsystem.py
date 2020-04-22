@@ -78,3 +78,17 @@ class AuthSystem():
             return {'error': 'Signature expired. Please log in again.', "status_code": 403}
         except jwt.InvalidTokenError:
             return {'error': 'Invalid token. Please log in again.', "status_code": 401}
+
+    @staticmethod
+    def valid_pw(user_id, password):
+        db = Database()
+        query = {'_id': user_id}
+        user = db.findUser(query)
+        if user:
+            if bcrypt.checkpw(password.encode('ascii'), user['password'].encode('ascii')):
+                return True
+        return False
+
+    @staticmethod
+    def encrypt_pw(password):
+        return bcrypt.hashpw(password.encode('ascii'), bcrypt.gensalt()).decode('ascii')
