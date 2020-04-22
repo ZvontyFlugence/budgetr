@@ -454,3 +454,6 @@ def update_password():
                 return make_response(jsonify({'success': False, 'error': 'Invalid Account Credentials'}), 304)
         else:
             return make_response(jsonify({'success': False, 'error': 'User not found!'}), 404)
+
+if __name__ == '__main__':
+    app.run(host="localhost", port=5000)
