@@ -21,7 +21,7 @@ function App() {
   const [errorMsg, setErrorMsg] = useState('');
 
   const alertClose = () => {
-    setShow(false);
+    setShowAlert(false);
   }
 
   const alertOpen = (error) => {
