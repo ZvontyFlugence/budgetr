@@ -29,7 +29,7 @@ class Login extends React.Component {
                 this.props.error(data.error);
             }
         })
-        .then(() => window.location.reload());
+        // .then(() => window.location.reload());
 
         e.preventDefault();
     }
