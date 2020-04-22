@@ -1,1 +1,1 @@
-web: cd server && watress-serve --call 'server:app'
+web: cd server && waitress-serve --call 'server:app'
