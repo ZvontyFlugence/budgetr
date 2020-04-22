@@ -1,2 +1,1 @@
-release: cd server && export FLASK_APP=server.py && python -m flask run
-web: cd client && npm build
+web: cd server && gunicorn server:app
