@@ -25,7 +25,7 @@ function App() {
   }
 
   const alertOpen = (error) => {
-    setShow(true);
+    setShowAlert(true);
     setErrorMsg(error);
   }
 
