@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "scripts": {
-    "start": "concurrently \"cd client && npm run start\" \"cd server && export FLASK_APP=server.py && flask run'\"",
+    "start": "concurrently \"cd client && npm run start\" \"cd server && export FLASK_APP=server.py && flask run\"",
     "build": "cd client && npm install --only=dev && npm install && npm run build",
     "test": "cd client && npm run test",
     "eject": "cd client && npm run eject"
