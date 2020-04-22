@@ -15,6 +15,7 @@ export default function CategoryCard(props) {
   const [editCatData, setEditCatData] = useState({ name: "", limit: 0.00 });
   const [expenseData, setExpenseData] = useState({ item: "", amount: 0.00, date: "", expenseCategory: "" })
   const [catList, setCatList] = useState([]);
+  const catName = props.cat.name;
 
   useEffect(() => {
     fetch('http://localhost:5000/user', {
@@ -39,13 +40,15 @@ export default function CategoryCard(props) {
   }
 
   const submitEditCategory = () => {
+    let { name, limit } = editCatData;
+    let oldName = catName;
     fetch('http://localhost:5000/edit-category', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
       },
-      body: JSON.stringify(editCatData)
+      body: JSON.stringify({ name, limit, oldName })
     })
     .then(response => response.json())
     .then(data => {
@@ -54,7 +57,8 @@ export default function CategoryCard(props) {
       } else {
         window.location.reload();
       }
-    });
+    })
+    .catch(err => console.log(err))
   }
 
   const deleteCategory = name => {
@@ -77,13 +81,24 @@ export default function CategoryCard(props) {
   }
 
   const submitEditExpense = () => {
+    let oldItem = activeExpense.item;
+    let oldAmount = activeExpense.amount;
+    let oldCat = activeExpense.expenseCategory;
     fetch('http://localhost:5000/edit-expense', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
       },
-      body: JSON.stringify(expenseData)
+      body: JSON.stringify({
+        item: expenseData.item || activeExpense.item,
+        amount: expenseData.amount || activeExpense.amount,
+        date: expenseData.date || activeExpense.date,
+        expenseCategory: expenseData.expenseCategory || activeExpense.expenseCategory,
+        oldCat,
+        oldItem,
+        oldAmount,
+      })
     })
     .then(response => response.json())
     .then(data => {
@@ -92,7 +107,8 @@ export default function CategoryCard(props) {
       } else {
         window.location.reload();
       }
-    });
+    })
+    .catch(err => console.log(err));
   }
 
   const deleteExpense = () => {
@@ -102,7 +118,7 @@ export default function CategoryCard(props) {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('token')
       },
-      body: JSON.stringify(activeExpense.item)
+      body: JSON.stringify(activeExpense)
     })
     .then(response => response.json())
     .then(data => {
@@ -111,7 +127,8 @@ export default function CategoryCard(props) {
       } else {
         window.location.reload();
       }
-    });
+    })
+    .catch(err => console.log(err))
   }
 
   return (
@@ -148,8 +165,8 @@ export default function CategoryCard(props) {
             return (
               <Row key={id} style={{fontSize: 12}} onClick={() => editExpense(expense)}>
                 <Col xs={5}>{expense.item}</Col>
-                <Col xs={4} style={{textAlign: 'center'}}>{date.getMonth()+1}/{date.getDate()}/{date.getFullYear()}</Col>
-                <Col xs={3} style={{textAlign: 'right'}}>${expense.amount}</Col>
+                <Col xs={4} style={{textAlign: 'center'}}>{date.getMonth()+1}/{date.getDate()+1}/{date.getFullYear()}</Col>
+                <Col xs={3} style={{textAlign: 'right'}}>${expense.amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}</Col>
               </Row>
             )
           })}

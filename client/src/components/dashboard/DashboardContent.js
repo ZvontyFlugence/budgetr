@@ -78,7 +78,7 @@ class DashboardContent extends React.Component {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token')
             },
-            body: JSON.stringify({ categoryName, categoryLimit })
+            body: JSON.stringify({ name: categoryName, limit: categoryLimit })
         })
         .then(response => response.json())
         .then(data => {

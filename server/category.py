@@ -20,10 +20,18 @@ class Category():
         self.spent += expense.amount
 
     def removeExpense(self, expense):
-        for i in range(0, len(self.expenses) - 1):
-            if (expense == self.expenses[i]):
-                while ((i < len(self.expenses) - 1) and (self.categories[i+1] is not None)):
-                    self.expenses[i] = self.expenses[i + 1]
+        try:
+            for i in range(0, len(self.expenses)):
+                if expense['oldItem'] == self.expenses[i].getItem():
+                    self.expenses.pop(i)
+                    self.spent -= expense['oldAmount']
+                    break
+        except KeyError:
+            for i in range(0, len(self.expenses)):
+                if expense['item'] == self.expenses[i].getItem():
+                    self.expenses.pop(i)
+                    self.spent -= expense['amount']
+                    break
 
     def getName(self):
         return self.name
