@@ -4,10 +4,13 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 
 class Login extends React.Component {
-    state = {
-        email: '',
-        password: '',
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+        };
+    }
 
     login(e) {
         let {email, password} = this.state;
@@ -23,7 +26,7 @@ class Login extends React.Component {
             if (data.status_code === 200) {
                 localStorage.setItem('token', data.token);
             } else {
-                console.log(data.error);
+                this.props.error(data.error);
             }
         })
         .then(() => window.location.reload());
