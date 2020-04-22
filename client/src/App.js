@@ -32,7 +32,7 @@ function App() {
   return (
     <Router>
       <BudgetrNavbar />
-      <Alert variant="primary" onClose={alertClose} dismissible>
+      <Alert show={showAlert} variant="primary" onClose={alertClose} dismissible>
         {errorMsg}
       </Alert>
       <Switch>
