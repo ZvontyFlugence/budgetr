@@ -17,7 +17,7 @@ class DashboardContent extends React.Component {
         showAddExpenseModal: false,
         categoryName: "",
         categoryLimit: 0.00,
-        categories: [],
+        user: null,
         incomeName: "",
         incomeDate: Date.now(),
         incomeAmount: 0.00,
@@ -41,7 +41,7 @@ class DashboardContent extends React.Component {
         .then(data => {
             let user = data.user;
             if (user) {
-                this.setState({ ...this.state, categories: user.categories });
+                this.setState({ ...this.state, user: user });
             }
         });
     }
@@ -150,6 +150,9 @@ class DashboardContent extends React.Component {
                         <Button variant="primary" onClick={this.showAddExpenseModal}>Add Expense</Button>
                         <Button variant="primary" onClick={this.showAddIncomeModal}>Add Income</Button>
                         <Button variant="primary">Generate Statement</Button>
+                        {this.state.user && this.state.user.replyLink ? (
+                            <Button variant="primary">View Last Report</Button>
+                        ) : <></>}
                     </div>
                 </Row>
                 <Row style={{paddingTop: '5vh'}}>
@@ -157,14 +160,14 @@ class DashboardContent extends React.Component {
                         <Card bg="secondary" text="primary" border="primary" className="budgetr-category-list">
                             <Card.Header>
                                 <Row>
-                                    <Col style={{lineHeight: 2}}>Budget Categories</Col>
+                                    <Col style={{lineHeight: 2}}>Expenses: {this.state.user && `$${this.state.user.totalExpenses.toLocaleString('en-US', { minimumFractionDigits: 2 })} Total`}</Col>
                                     <Col md={2}>
                                         <Button variant="primary" size="sm" onClick={this.showAddCategoryModal}>+</Button>
                                     </Col>
                                 </Row>
                             </Card.Header>
                             <Accordion style={{ width: '100%' }}>
-                                {this.state.categories && this.state.categories.map((cat, id) => (
+                                {this.state.user && this.state.user.categories.map((cat, id) => (
                                 <CategoryCard key={id} cat={cat} />
                                 ))}
                             </Accordion>
@@ -177,7 +180,7 @@ class DashboardContent extends React.Component {
                 </Row>
                 <Modal show={this.state.showAddCategoryModal} onHide={this.hideAddCategoryModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Add Budget Category</Modal.Title>
+                        <Modal.Title>Add Category</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
@@ -236,7 +239,7 @@ class DashboardContent extends React.Component {
                             <Form.Group controlId="expenseCategory">
                                 <Form.Label>Expense Category</Form.Label>
                                 <Form.Control as="select" onChange={e => this.setState({ ...this.state, expenseCategory: e.target.value })} >
-                                    {this.state.categories.map((cat, id) => (
+                                    {this.state.user && this.state.user.categories.map((cat, id) => (
                                         <option key={id}>{cat.name}</option>
                                     ))}
                                 </Form.Control>
