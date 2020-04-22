@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "start": "cd client && npm run start",
-    "build": "cd client && npm run build",
+    "build": "cd client && npm install --only=dev && npm install && npm run build",
     "test": "cd client && npm run test",
     "eject": "cd client && npm run eject"
   }
