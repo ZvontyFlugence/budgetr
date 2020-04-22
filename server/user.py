@@ -29,11 +29,8 @@ class User():
     def addCategory(self, category):
         self.categories.append(category)
 
-    def removeCategory(self, category):
-        for i in range(0, len(self.categories) - 1):
-            if(category == self.categories[i]):
-                while((i < len(self.categories) - 1) and (self.categories[i+1] is not None)):
-                    self.categories[i] = self.categories[i+1]
+    def removeCategory(self, category_index):
+        self.categories.pop(category_index)
 
     def addIncome(self, income):
         if income.isSavings:

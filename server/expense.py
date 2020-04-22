@@ -21,7 +21,7 @@ class Expense:
     def setDate(self, date):
         self.date = date
 
-    def getitem(self):
+    def getItem(self):
         return self.item
 
     def getAmount(self):
