@@ -19,7 +19,7 @@ export default function IncomeCard(props) {
     let oldName = activeIncome.name;
     let oldAmount = activeIncome.amount;
     let oldIsSavings = activeIncome.isSavings;
-    fetch('http://0.0.0.0:5000/edit-income', {
+    fetch('http://64.225.12.50:5000/edit-income', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export default function IncomeCard(props) {
   }
 
   const submitDeleteIncome = () => {
-    fetch('http://0.0.0.0:5000/delete-income', {
+    fetch('http://64.225.12.50:5000/delete-income', {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
