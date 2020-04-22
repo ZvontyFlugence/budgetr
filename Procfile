@@ -1,1 +1,1 @@
-web: cd server && gunicorn server:app
+web: cd server && watress-serve --call 'server:app'
