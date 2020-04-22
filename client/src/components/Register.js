@@ -1,4 +1,5 @@
 import React from 'react';
+import history from '../history';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -19,19 +20,23 @@ class Register extends React.Component {
         let {username, email, password, confirm} = this.state;
         
         if (password !== confirm) {
-            // TODO: Display Error Message
-            return;
+            this.props.error('Passwords Do Not Match');
         }
 
         // TODO: Use a config to decide what url to use
-        fetch("http://64.225.12.50:5000/register", {
+        fetch("http://localhost:5000/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password })
         })
         .then(response => response.json())
-        .then(token => localStorage.setItem('token', token))
-        .then(() => window.location.reload());
+        .then(data => {
+            if (!data.success) {
+                this.props.error(data.error);
+            } else {
+                history.push('/dashboard');
+            }
+        })
         
         event.preventDefault();
     }

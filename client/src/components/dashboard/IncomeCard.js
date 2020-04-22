@@ -19,7 +19,7 @@ export default function IncomeCard(props) {
     let oldName = activeIncome.name;
     let oldAmount = activeIncome.amount;
     let oldIsSavings = activeIncome.isSavings;
-    fetch('http://64.225.12.50:5000/edit-income', {
+    fetch('http://localhost:5000/edit-income', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -39,16 +39,16 @@ export default function IncomeCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        console.log(data.error);
+        this.props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => this.props.error(err));
   }
 
   const submitDeleteIncome = () => {
-    fetch('http://64.225.12.50:5000/delete-income', {
+    fetch('http://localhost:5000/delete-income', {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
@@ -59,12 +59,12 @@ export default function IncomeCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        console.log(data.error);
+        this.props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => this.props.error(err));
   }
 
   return (

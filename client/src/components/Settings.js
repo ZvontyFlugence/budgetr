@@ -5,16 +5,19 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 class Settings extends React.Component {
-    state = {
-        username: '',
-        email: '',
-        oldPass: '',
-        password: '',
-        confirm: '',
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            email: '',
+            oldPass: '',
+            password: '',
+            confirm: '',
+        }
     }
 
     componentDidMount() {
-        fetch('http://64.225.12.50:5000/user', {
+        fetch('http://localhost:5000/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,11 +31,11 @@ class Settings extends React.Component {
                 this.setState({ username: user.username, email: user.email })
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => this.props.error(err));
     }
 
     updateUsername = () => {
-        fetch('http://64.225.12.50:5000/update-user/username', {
+        fetch('http://localhost:5000/update-user/username', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,16 +46,16 @@ class Settings extends React.Component {
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
-                console.log(data.error);
+                this.props.error(data.error);
             } else {
                 window.location.reload();
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => this.props.error(err));
     }
 
     updateEmail = () => {
-        fetch('http://64.225.12.50:5000/update-user/email', {
+        fetch('http://localhost:5000/update-user/email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -63,17 +66,17 @@ class Settings extends React.Component {
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
-                console.log(data.error);
+                this.props.error(data.error);
             } else {
                 window.location.reload();
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => this.props.error(err));
     }
 
     updatePassword = () => {
         if ((this.state.confirm === this.state.password) && this.state.password !== this.state.oldPass) {
-            fetch('http://64.225.12.50:5000/update-user/password', {
+            fetch('http://localhost:5000/update-user/password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -84,14 +87,14 @@ class Settings extends React.Component {
             .then(response => response.json())
             .then(data => {
                 if (!data.success) {
-                    console.log(data.error);
+                    this.props.error(data.error);
                 } else {
                     window.location.reload();
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => this.props.error(err));
         } else {
-            // TODO: Throw ERROR
+            this.props.error('New Password Must Match Confirmed Password And New Password Cannot Match Your Old Password');
         }
     }
 

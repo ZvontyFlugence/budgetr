@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Route,
   Redirect
@@ -11,6 +11,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 import Settings from './components/Settings';
+import history from './history';
 import './App.scss';
 
 import Alert from 'react-bootstrap/Alert';
@@ -22,6 +23,7 @@ function App() {
 
   const alertClose = () => {
     setShowAlert(false);
+    setErrorMsg('');
   }
 
   const alertOpen = (error) => {
@@ -30,7 +32,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router history={history}>
       <BudgetrNavbar />
       <Alert show={showAlert} variant="danger" onClose={alertClose} dismissible>
         {errorMsg}

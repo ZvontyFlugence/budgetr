@@ -11,27 +11,30 @@ import CategoryCard from './CategoryCard';
 import IncomeCard from './IncomeCard';
 
 class DashboardContent extends React.Component {
+    constructor(props) {
+        super(props);
 
-    state = {
-        showAddCategoryModal: false,
-        showAddIncomeModal: false,
-        showAddExpenseModal: false,
-        categoryName: "",
-        categoryLimit: 0.00,
-        user: null,
-        incomeName: "",
-        incomeDate: Date.now(),
-        incomeAmount: 0.00,
-        incomeConsistent: true,
-        incomeSaving: false,
-        expenseCategory: "",
-        expenseName: "",
-        expenseDate: Date.now(),
-        expenseAmount: 0.00
+        this.state = {
+            showAddCategoryModal: false,
+            showAddIncomeModal: false,
+            showAddExpenseModal: false,
+            categoryName: "",
+            categoryLimit: 0.00,
+            user: null,
+            incomeName: "",
+            incomeDate: Date.now(),
+            incomeAmount: 0.00,
+            incomeConsistent: true,
+            incomeSaving: false,
+            expenseCategory: "",
+            expenseName: "",
+            expenseDate: Date.now(),
+            expenseAmount: 0.00
+        }
     }
 
     componentDidMount() {
-        fetch('http://64.225.12.50:5000/user', {
+        fetch('http://localhost:5000/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -44,7 +47,8 @@ class DashboardContent extends React.Component {
             if (user) {
                 this.setState({ ...this.state, user: user });
             }
-        });
+        })
+        .catch(err => this.props.error(err))
     }
 
     showAddCategoryModal = () => {
@@ -73,7 +77,7 @@ class DashboardContent extends React.Component {
 
     submitAddCategory = () => {
         let { categoryName, categoryLimit } = this.state;
-        fetch('http://64.225.12.50:5000/create-category', {
+        fetch('http://localhost:5000/create-category', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -84,16 +88,17 @@ class DashboardContent extends React.Component {
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
-                console.log(data.error);
+                this.props.error(data.error);
             } else {
                 window.location.reload();
             }
         })
+        .catch(err => this.props.error(err));
     }
     
     submitAddIncome = () => {
         let { incomeName, incomeAmount, incomeDate, incomeConsistent, incomeSaving } = this.state;
-        fetch('http://64.225.12.50:5000/add-income', {
+        fetch('http://localhost:5000/add-income', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -110,17 +115,17 @@ class DashboardContent extends React.Component {
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
-                console.log(data.error);
+                this.props.error(data.error);
             } else {
                 window.location.reload();
             }
         })
-        .catch(err => console.log(err));
+        .catch(err => this.props.error(err));
     }
 
     submitAddExpense = () => {
         let { expenseCategory, expenseName, expenseAmount, expenseDate } = this.state;
-        fetch('http://64.225.12.50:5000/add-expense', {
+        fetch('http://localhost:5000/add-expense', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -136,11 +141,12 @@ class DashboardContent extends React.Component {
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
-                console.log(data.error);
+                this.props.error(data.error);
             } else {
                 window.location.reload();
             }
         })
+        .catch(err => this.props.error(err));
     }
 
     render() {

@@ -18,7 +18,7 @@ export default function CategoryCard(props) {
   const catName = props.cat.name;
 
   useEffect(() => {
-    fetch('http://64.225.12.50:5000/user', {
+    fetch('http://localhost:5000/user', {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export default function CategoryCard(props) {
   const submitEditCategory = () => {
     let { name, limit } = editCatData;
     let oldName = catName;
-    fetch('http://64.225.12.50:5000/edit-category', {
+    fetch('http://localhost:5000/edit-category', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -53,16 +53,16 @@ export default function CategoryCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        console.log(data.error);
+        this.props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => this.props.error(err))
   }
 
   const deleteCategory = name => {
-    fetch('http://64.225.12.50:5000/delete-category', {
+    fetch('http://localhost:5000/delete-category', {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export default function CategoryCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        console.log(data.error);
+        this.props.error(data.error);
       } else {
         window.location.reload();
       }
@@ -84,7 +84,7 @@ export default function CategoryCard(props) {
     let oldItem = activeExpense.item;
     let oldAmount = activeExpense.amount;
     let oldCat = activeExpense.expenseCategory;
-    fetch('http://64.225.12.50:5000/edit-expense', {
+    fetch('http://localhost:5000/edit-expense', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -103,16 +103,16 @@ export default function CategoryCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        console.log(data.error);
+        this.props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => console.log(err));
+    .catch(err => this.props.error(err));
   }
 
   const deleteExpense = () => {
-    fetch('http://64.225.12.50:5000/delete-expense', {
+    fetch('http://localhost:5000/delete-expense', {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
@@ -123,12 +123,12 @@ export default function CategoryCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        console.log(data.error);
+        this.props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => this.props.error(err))
   }
 
   return (

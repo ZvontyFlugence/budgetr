@@ -1,4 +1,5 @@
 import React from 'react';
+import history from '../history';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -14,7 +15,7 @@ class BudgetrNavbar extends React.Component {
         let token = localStorage.getItem('token');
         
         if (token) {
-            fetch('http://64.225.12.50:5000/user', {
+            fetch('http://localhost:5000/user', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -28,14 +29,17 @@ class BudgetrNavbar extends React.Component {
                     this.setState({ username: user.username });
                 }
             })
-            .catch(error => this.logout())
+            .catch(error => {
+                this.props.error(error);
+                this.logout();
+            })
         }
     }
     
 
     logout() {
         localStorage.removeItem('token');
-        window.location.reload();
+        history.push('/')
     }
 
     render() {

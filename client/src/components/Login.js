@@ -1,4 +1,5 @@
 import React from 'react';
+import history from '../history';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -12,11 +13,17 @@ class Login extends React.Component {
         };
     }
 
+    componentDidUpdate() {
+        if (localStorage.getItem('token')) {
+            history.push('/dashboard');
+        }
+    }
+
     login(e) {
         let {email, password} = this.state;
 
         // TODO: Use a config to decide what url to see
-        fetch("http://64.225.12.50:5000/auth", {
+        fetch("http://localhost:5000/auth", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
@@ -25,11 +32,11 @@ class Login extends React.Component {
         .then(data => {
             if (data.status_code === 200) {
                 localStorage.setItem('token', data.token);
+                history.push('/dashboard');
             } else {
                 this.props.error(data.error);
             }
-        })
-        // .then(() => window.location.reload());
+        });
 
         e.preventDefault();
     }
