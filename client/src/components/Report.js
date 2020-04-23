@@ -57,15 +57,6 @@ function Report(props) {
   user.categories.forEach(cat => {
     expenses = [...expenses, ...cat.expenses];
   });
-  
-  const sortTransactions = (a, b) => {
-    let aDate = new Date(Date.parse(a[0]));
-    let bDate = new Date(Date.parse(b[0]));
-
-    return aDate < bDate ? aDate : bDate;
-  }
-
-  const transactions = [ ...expenses, ...user.income, ...user.savings ].sort((a, b) => sortTransactions(a, b));
 
   return (
     <Document>
@@ -79,7 +70,6 @@ function Report(props) {
           )} fixed />
         </View>
         <View style={styles.title}>
-          <Image src={process.env.PUBLIC_URL + '/BudgetrBannerLG.png'} />
           <Text>Budgetr Account Statement Report</Text>
         </View>
         <View style={styles.text_sub}>
