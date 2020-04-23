@@ -356,7 +356,7 @@ def delete_income():
             else:
                 for i in range(0, len(user.income)):
                     if user.income[i].getName() == income['name']:
-                        user.remvoeIncome(i, income['isSavings'])
+                        user.removeIncome(i, income['isSavings'])
                         break
             user_dict = user.as_dict()
             updates = {}
@@ -452,6 +452,34 @@ def update_password():
                     return make_response(jsonify({'success': False, 'error': 'Failed to update User!'}), 304)
             else:
                 return make_response(jsonify({'success': False, 'error': 'Invalid Account Credentials'}), 304)
+        else:
+            return make_response(jsonify({'success': False, 'error': 'User not found!'}), 404)
+
+
+@app.route('/update-user/reportLink', methods=['POST'])
+def update_report_link():
+    token = request.headers.get('Authorization')
+    if token is None:
+        return make_response(jsonify({'success': False, 'error': 'No Auth Token'}), 400)
+    else:
+        db = Database()
+        user_id = AuthSystem.validate_token(token)
+        query = {'_id': user_id}
+        user = db.findUser(query)
+        if user:
+            json = request.json
+            user = User.from_dict(user)
+            if json['reportLink'].strip() != '':
+                user.setLatestReport(json['reportLink'])
+                user_dict = user.as_dict()
+                updates = {'reportLink': user_dict['reportLink']}
+                did_update = db.updateUser(query, updates)
+                if did_update:
+                    return make_response(jsonify({'success': True}), 201)
+                else:
+                    return make_response(jsonify({'success': False, 'error': 'Failed to update User!'}), 304)
+            else:
+                return make_response(jsonify({'success': False, 'error': 'Invalid Report Link'}), 400)
         else:
             return make_response(jsonify({'success': False, 'error': 'User not found!'}), 404)
 

@@ -53,12 +53,12 @@ export default function CategoryCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        this.props.error(data.error);
+        props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => this.props.error(err))
+    .catch(err => props.error(err.message))
   }
 
   const deleteCategory = name => {
@@ -73,7 +73,7 @@ export default function CategoryCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        this.props.error(data.error);
+        props.error(data.error);
       } else {
         window.location.reload();
       }
@@ -103,12 +103,12 @@ export default function CategoryCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        this.props.error(data.error);
+        props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => this.props.error(err));
+    .catch(err => props.error(err.message));
   }
 
   const deleteExpense = () => {
@@ -123,12 +123,12 @@ export default function CategoryCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        this.props.error(data.error);
+        props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => this.props.error(err))
+    .catch(err => props.error(err.message))
   }
 
   return (

@@ -6,9 +6,11 @@ import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Accordion from 'react-bootstrap/Accordion';
+import { pdf } from '@react-pdf/renderer';
 
 import CategoryCard from './CategoryCard';
 import IncomeCard from './IncomeCard';
+import Report from '../Report';
 
 class DashboardContent extends React.Component {
     constructor(props) {
@@ -48,7 +50,7 @@ class DashboardContent extends React.Component {
                 this.setState({ ...this.state, user: user });
             }
         })
-        .catch(err => this.props.error(err))
+        .catch(err => this.props.error(err.message))
     }
 
     showAddCategoryModal = () => {
@@ -93,7 +95,7 @@ class DashboardContent extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err));
+        .catch(err => this.props.error(err.message));
     }
     
     submitAddIncome = () => {
@@ -120,7 +122,7 @@ class DashboardContent extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err));
+        .catch(err => this.props.error(err.message));
     }
 
     submitAddExpense = () => {
@@ -146,7 +148,58 @@ class DashboardContent extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err));
+        .catch(err => this.props.error(err.message));
+    }
+
+    generateReport = () => {
+        const report = (<Report user={this.state.user} />);
+        pdf(report)
+        .toBlob()
+        .then(blob => {
+            var reader = new FileReader();
+            reader.readAsDataURL(blob);
+            reader.onloadend = () => {
+                var base64Data = reader.result;
+                console.log('Blob', blob);
+                console.log('reportB64', base64Data);
+                this.uploadReportLink(base64Data);
+                window.open(URL.createObjectURL(blob));
+            }
+        })
+        .catch(err => this.props.error(err.message));
+    }
+
+    uploadReportLink = reportLink => {
+        fetch('http://localhost:5000/update-user/reportLink', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify({ reportLink })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                this.props.error(data.error);
+            } else {
+                window.location.reload();
+            }
+        })
+        .catch(err => this.props.error(err.message));
+    }
+
+    viewReport = () => {
+        var base64 = this.state.user.reportLink.substring(28);
+        var binary = atob(base64.replace(/\s/g, ''));
+        var len = binary.length;
+        var buffer = new ArrayBuffer(len);
+        var view = new Uint8Array(buffer);
+        for (let i = 0; i < len; i++) {
+            view[i] = binary.charCodeAt(i);
+        }
+        const blob = new Blob([view], { type: 'application/pdf' });
+        window.open(URL.createObjectURL(blob));
     }
 
     render() {
@@ -157,9 +210,9 @@ class DashboardContent extends React.Component {
                     <div className="ml-auto">
                         <Button variant="primary" onClick={this.showAddExpenseModal}>Add Expense</Button>
                         <Button variant="primary" onClick={this.showAddIncomeModal}>Add Income</Button>
-                        <Button variant="primary">Generate Statement</Button>
-                        {this.state.user && this.state.user.replyLink ? (
-                            <Button variant="primary">View Last Report</Button>
+                        <Button variant="primary" onClick={this.generateReport}>Generate Statement</Button>
+                        {this.state.user && this.state.user.reportLink ? (
+                            <Button variant="primary" onClick={this.viewReport} >View Last Report</Button>
                         ) : <></>}
                     </div>
                 </Row>
@@ -176,7 +229,7 @@ class DashboardContent extends React.Component {
                             </Card.Header>
                             <Accordion style={{ width: '100%' }}>
                                 {this.state.user && this.state.user.categories.map((cat, id) => (
-                                    <CategoryCard key={id} cat={cat} />
+                                    <CategoryCard key={id} cat={cat} error={this.props.error} />
                                 ))}
                             </Accordion>
                         </Card>
@@ -201,7 +254,7 @@ class DashboardContent extends React.Component {
                                         </Row>
                                     </Accordion.Toggle>
                                     {this.state.user && this.state.user.income.map((inc, id) => (
-                                        <IncomeCard key={id} income={inc} />
+                                        <IncomeCard key={id} income={inc} error={this.props.error} />
                                     ))}
                                 </Card>
                                 <Card className="category-card">
@@ -224,7 +277,7 @@ class DashboardContent extends React.Component {
                     </Col>
                 </Row>
                 <Row>
-                    <p style={{margin: '0 auto', paddingTop: '5vh'}}>Row 3</p>
+                    <p style={{margin: '0 auto', paddingTop: '10vh'}}>Income vs. Expense Graph Here</p>
                 </Row>
                 <Modal show={this.state.showAddCategoryModal} onHide={this.hideAddCategoryModal}>
                     <Modal.Header closeButton>
