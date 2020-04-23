@@ -24,7 +24,7 @@ class Register extends React.Component {
         }
 
         // TODO: Use a config to decide what url to use
-        fetch("http://localhost:5000/register", {
+        fetch("http://0.0.0.0:5000/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password })

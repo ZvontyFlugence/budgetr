@@ -24,7 +24,7 @@ class Login extends React.Component {
         let {email, password} = this.state;
 
         // TODO: Use a config to decide what url to see
-        fetch("http://localhost:5000/auth", {
+        fetch("http://0.0.0.0:5000/auth", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
