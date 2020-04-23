@@ -1,6 +1,5 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Canvas } from '@react-pdf/renderer';
-import banner_lg from '../BudgetrBanner.png';
 
 // Create Styling for PDF
 const styles = StyleSheet.create({
