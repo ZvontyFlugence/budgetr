@@ -276,9 +276,9 @@ class DashboardContent extends React.Component {
                         </Card>
                     </Col>
                 </Row>
-                <Row>
+                {/* <Row>
                     <p style={{margin: '0 auto', paddingTop: '10vh'}}>Income vs. Expense Graph Here</p>
-                </Row>
+                </Row> */}
                 <Modal show={this.state.showAddCategoryModal} onHide={this.hideAddCategoryModal}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add Category</Modal.Title>
