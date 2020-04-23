@@ -1,6 +1,6 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Canvas } from '@react-pdf/renderer';
-import banner_lg from '../budgetr_banner_lg.svg';
+import banner_lg from '../BudgetrBanner.png';
 
 // Create Styling for PDF
 const styles = StyleSheet.create({
@@ -80,7 +80,7 @@ function Report(props) {
           )} fixed />
         </View>
         <View style={styles.title}>
-          <Image src={banner_lg} />
+          <Image src={process.env.PUBLIC_URL + '/BudgetrBannerLG.png'} />
           <Text>Budgetr Account Statement Report</Text>
         </View>
         <View style={styles.text_sub}>
