@@ -35,6 +35,7 @@ class Register extends React.Component {
                 this.props.error(data.error);
             } else {
                 history.push('/dashboard');
+                window.location.reload();
             }
         })
         

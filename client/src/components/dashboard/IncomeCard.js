@@ -28,7 +28,7 @@ export default function IncomeCard(props) {
       body: JSON.stringify({
         name: editIncomeData.name || oldName,
         amount: editIncomeData.amount || oldAmount,
-        date: editIncomeData.date[0] || activeIncome.date[0],
+        date: editIncomeData.date || activeIncome.date,
         isConsistent: editIncomeData.isConsistent,
         isSavings: editIncomeData.isSavings,
         oldName,
@@ -39,12 +39,12 @@ export default function IncomeCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        this.props.error(data.error);
+        props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => this.props.error(err));
+    .catch(err => props.error(err.message));
   }
 
   const submitDeleteIncome = () => {
@@ -59,12 +59,12 @@ export default function IncomeCard(props) {
     .then(response => response.json())
     .then(data => {
       if (!data.success) {
-        this.props.error(data.error);
+        props.error(data.error);
       } else {
         window.location.reload();
       }
     })
-    .catch(err => this.props.error(err));
+    .catch(err => props.error(err.message));
   }
 
   return (

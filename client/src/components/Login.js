@@ -16,6 +16,7 @@ class Login extends React.Component {
     componentDidUpdate() {
         if (localStorage.getItem('token')) {
             history.push('/dashboard');
+            window.location.reload();
         }
     }
 
@@ -32,7 +33,7 @@ class Login extends React.Component {
         .then(data => {
             if (data.status_code === 200) {
                 localStorage.setItem('token', data.token);
-                history.push('/dashboard');
+                window.location.reload();
             } else {
                 this.props.error(data.error);
             }
