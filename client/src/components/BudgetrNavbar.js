@@ -39,7 +39,8 @@ class BudgetrNavbar extends React.Component {
 
     logout() {
         localStorage.removeItem('token');
-        history.push('/')
+        history.push('/');
+        window.location.reload();
     }
 
     render() {
