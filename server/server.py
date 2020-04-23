@@ -484,4 +484,4 @@ def update_report_link():
             return make_response(jsonify({'success': False, 'error': 'User not found!'}), 404)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="64.225.12.50", port=5000)
