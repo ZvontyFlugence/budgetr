@@ -17,7 +17,7 @@ class Settings extends React.Component {
     }
 
     componentDidMount() {
-        fetch('http://64.225.12.50:5000/user', {
+        fetch('https://api.budgetr-app.tk:5000/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ class Settings extends React.Component {
     }
 
     updateUsername = () => {
-        fetch('http://64.225.12.50:5000/update-user/username', {
+        fetch('https://api.budgetr-app.tk:5000/update-user/username', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ class Settings extends React.Component {
     }
 
     updateEmail = () => {
-        fetch('http://64.225.12.50:5000/update-user/email', {
+        fetch('https://api.budgetr-app.tk:5000/update-user/email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ class Settings extends React.Component {
 
     updatePassword = () => {
         if ((this.state.confirm === this.state.password) && this.state.password !== this.state.oldPass) {
-            fetch('http://64.225.12.50:5000/update-user/password', {
+            fetch('https://api.budgetr-app.tk:5000/update-user/password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

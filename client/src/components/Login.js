@@ -24,7 +24,7 @@ class Login extends React.Component {
         let {email, password} = this.state;
 
         // TODO: Use a config to decide what url to see
-        fetch("http://64.225.12.50:5000/auth", {
+        fetch('https://api.budgetr-app.tk/auth', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
