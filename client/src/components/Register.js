@@ -31,11 +31,12 @@ class Register extends React.Component {
         })
         .then(response => response.json())
         .then(data => {
-            if (!data.success) {
-                this.props.error(data.error);
-            } else {
+            if (data.status_code === 201) {
+                localStorage.setItem('token', data.token)
                 history.push('/dashboard');
                 window.location.reload();
+            } else {
+                this.props.error(data.error);
             }
         })
         
