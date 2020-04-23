@@ -18,7 +18,7 @@ export default function CategoryCard(props) {
   const catName = props.cat.name;
 
   useEffect(() => {
-    fetch('https://api.budgetr-app.tk:5000/user', {
+    fetch('https://api.budgetr-app.tk/user', {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export default function CategoryCard(props) {
   const submitEditCategory = () => {
     let { name, limit } = editCatData;
     let oldName = catName;
-    fetch('https://api.budgetr-app.tk:5000/edit-category', {
+    fetch('https://api.budgetr-app.tk/edit-category', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export default function CategoryCard(props) {
   }
 
   const deleteCategory = name => {
-    fetch('https://api.budgetr-app.tk:5000/delete-category', {
+    fetch('https://api.budgetr-app.tk/delete-category', {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export default function CategoryCard(props) {
     let oldItem = activeExpense.item;
     let oldAmount = activeExpense.amount;
     let oldCat = activeExpense.expenseCategory;
-    fetch('https://api.budgetr-app.tk:5000/edit-expense', {
+    fetch('https://api.budgetr-app.tk/edit-expense', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export default function CategoryCard(props) {
   }
 
   const deleteExpense = () => {
-    fetch('https://api.budgetr-app.tk:5000/delete-expense', {
+    fetch('https://api.budgetr-app.tk/delete-expense', {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',

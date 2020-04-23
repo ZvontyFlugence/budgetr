@@ -36,7 +36,7 @@ class DashboardContent extends React.Component {
     }
 
     componentDidMount() {
-        fetch('https://api.budgetr-app.tk:5000/user', {
+        fetch('https://api.budgetr-app.tk/user', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ class DashboardContent extends React.Component {
 
     submitAddCategory = () => {
         let { categoryName, categoryLimit } = this.state;
-        fetch('https://api.budgetr-app.tk:5000/create-category', {
+        fetch('https://api.budgetr-app.tk/create-category', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ class DashboardContent extends React.Component {
     
     submitAddIncome = () => {
         let { incomeName, incomeAmount, incomeDate, incomeConsistent, incomeSaving } = this.state;
-        fetch('https://api.budgetr-app.tk:5000/add-income', {
+        fetch('https://api.budgetr-app.tk/add-income', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ class DashboardContent extends React.Component {
 
     submitAddExpense = () => {
         let { expenseCategory, expenseName, expenseAmount, expenseDate } = this.state;
-        fetch('https://api.budgetr-app.tk:5000/add-expense', {
+        fetch('https://api.budgetr-app.tk/add-expense', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ class DashboardContent extends React.Component {
     }
 
     uploadReportLink = reportLink => {
-        fetch('https://api.budgetr-app.tk:5000/update-user/reportLink', {
+        fetch('https://api.budgetr-app.tk/update-user/reportLink', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
