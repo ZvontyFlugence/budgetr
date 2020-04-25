@@ -15,7 +15,7 @@ class BudgetrNavbar extends React.Component {
         let token = localStorage.getItem('token');
         
         if (token) {
-            fetch('https://api.budgetr-app.tk/user', {
+            fetch(`${process.env.REACT_APP_API_URL}/user`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

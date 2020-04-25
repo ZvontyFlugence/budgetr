@@ -19,7 +19,7 @@ export default function IncomeCard(props) {
     let oldName = activeIncome.name;
     let oldAmount = activeIncome.amount;
     let oldIsSavings = activeIncome.isSavings;
-    fetch('https://api.budgetr-app.tk/edit-income', {
+    fetch(`${process.env.REACT_APP_API_URL}/edit-income`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export default function IncomeCard(props) {
   }
 
   const submitDeleteIncome = () => {
-    fetch('https://api.budgetr-app.tk/delete-income', {
+    fetch(`${process.env.REACT_APP_API_URL}/delete-income`, {
       method: "DELETE",
       headers: {
         'Content-Type': 'application/json',

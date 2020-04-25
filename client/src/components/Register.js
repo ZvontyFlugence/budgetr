@@ -24,7 +24,7 @@ class Register extends React.Component {
         }
 
         // TODO: Use a config to decide what url to use
-        fetch('https://api.budgetr-app.tk/register', {
+        fetch(`${process.env.REACT_APP_API_URL}/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email, password })
