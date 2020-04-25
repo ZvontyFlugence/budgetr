@@ -31,7 +31,7 @@ class Settings extends React.Component {
                 this.setState({ username: user.username, email: user.email })
             }
         })
-        .catch(err => this.props.error(err.message));
+        .catch(err => this.props.error('Uh oh! Something went wrong!'));
     }
 
     updateUsername = () => {
@@ -51,7 +51,7 @@ class Settings extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err.message));
+        .catch(err => this.props.error('Uh oh! Something went wrong!'));
     }
 
     updateEmail = () => {
@@ -71,7 +71,7 @@ class Settings extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err.message));
+        .catch(err => this.props.error('Uh oh! Something went wrong!'));
     }
 
     updatePassword = () => {
@@ -92,7 +92,7 @@ class Settings extends React.Component {
                     window.location.reload();
                 }
             })
-            .catch(err => this.props.error(err.message));
+            .catch(err => this.props.error('Uh oh! Something went wrong!'));
         } else {
             this.props.error('New Password Must Match Confirmed Password And New Password Cannot Match Your Old Password');
         }

@@ -50,7 +50,7 @@ class DashboardContent extends React.Component {
                 this.setState({ ...this.state, user: user });
             }
         })
-        .catch(err => this.props.error(err.message))
+        .catch(err => this.props.error('Uh oh! Something went wrong!'))
     }
 
     showAddCategoryModal = () => {
@@ -95,7 +95,7 @@ class DashboardContent extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err.message));
+        .catch(err => this.props.error('Uh oh! Something went wrong!'));
     }
     
     submitAddIncome = () => {
@@ -122,7 +122,7 @@ class DashboardContent extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err.message));
+        .catch(err => this.props.error('Uh oh! Something went wrong!'));
     }
 
     submitAddExpense = () => {
@@ -148,7 +148,7 @@ class DashboardContent extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err.message));
+        .catch(err => this.props.error('Uh oh! Something went wrong!'));
     }
 
     generateReport = () => {
@@ -166,7 +166,7 @@ class DashboardContent extends React.Component {
                 window.open(URL.createObjectURL(blob));
             }
         })
-        .catch(err => this.props.error(err.message));
+        .catch(err => this.props.error('Uh oh! Something went wrong!'));
     }
 
     uploadReportLink = reportLink => {
@@ -186,7 +186,7 @@ class DashboardContent extends React.Component {
                 window.location.reload();
             }
         })
-        .catch(err => this.props.error(err.message));
+        .catch(err => this.props.error('Uh oh! Something went wrong!'));
     }
 
     viewReport = () => {

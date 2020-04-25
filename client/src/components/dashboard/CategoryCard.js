@@ -58,7 +58,7 @@ export default function CategoryCard(props) {
         window.location.reload();
       }
     })
-    .catch(err => props.error(err.message))
+    .catch(err => props.error('Uh oh! Something went wrong!'))
   }
 
   const deleteCategory = name => {
@@ -108,7 +108,7 @@ export default function CategoryCard(props) {
         window.location.reload();
       }
     })
-    .catch(err => props.error(err.message));
+    .catch(err => props.error('Uh oh! Something went wrong!'));
   }
 
   const deleteExpense = () => {
@@ -128,7 +128,7 @@ export default function CategoryCard(props) {
         window.location.reload();
       }
     })
-    .catch(err => props.error(err.message))
+    .catch(err => props.error('Uh oh! Something went wrong!'))
   }
 
   return (

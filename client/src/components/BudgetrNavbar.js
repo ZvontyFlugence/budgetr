@@ -30,7 +30,7 @@ class BudgetrNavbar extends React.Component {
                 }
             })
             .catch(error => {
-                this.props.error(error);
+                this.props.error('Uh oh! Something went wrong!');
                 this.logout();
             })
         }

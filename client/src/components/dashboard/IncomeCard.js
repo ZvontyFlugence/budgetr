@@ -28,7 +28,7 @@ export default function IncomeCard(props) {
       body: JSON.stringify({
         name: editIncomeData.name || oldName,
         amount: editIncomeData.amount || oldAmount,
-        date: editIncomeData.date || activeIncome.date,
+        date: editIncomeData.date[0] || activeIncome.date,
         isConsistent: editIncomeData.isConsistent,
         isSavings: editIncomeData.isSavings,
         oldName,
@@ -44,7 +44,7 @@ export default function IncomeCard(props) {
         window.location.reload();
       }
     })
-    .catch(err => props.error(err.message));
+    .catch(err => props.error('Uh oh! Something went wrong!'));
   }
 
   const submitDeleteIncome = () => {
@@ -64,7 +64,7 @@ export default function IncomeCard(props) {
         window.location.reload();
       }
     })
-    .catch(err => props.error(err.message));
+    .catch(err => props.error('Uh oh! Something went wrong!'));
   }
 
   return (
