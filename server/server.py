@@ -186,6 +186,8 @@ def edit_expense():
                         user.categories[i].addExpense(Expense(expense['item'], expense['amount'], expense['date'], expense['expenseCategory']))
                         break
             else:
+                amount_diff = expense['amount'] - expense['oldAmount']
+                user.updateTotalExpenses(amount_diff)
                 for i in range(0, len(user.categories)):
                     if user.categories[i].getName() == expense['expenseCategory']:
                         for j in range(0, len(user.categories[i].expenses)):
@@ -194,10 +196,11 @@ def edit_expense():
                                 user.categories[i].expenses[j].setAmount(expense['amount'])
                                 user.categories[i].expenses[j].setDate(expense['date'])
                                 user.categories[i].expenses[j].setExpenseCategory(expense['expenseCategory'])
+                                user.categories[i].updateSpent(amount_diff)
                                 break
                         break
             user_dict = user.as_dict()
-            updates = {'categories': user_dict['categories']}
+            updates = {'categories': user_dict['categories'], 'totalExpenses': user_dict['totalExpenses']}
             did_update = db.updateUser(query, updates)
             if did_update:
                 return make_response(jsonify({'success': True}), 200)
@@ -310,6 +313,7 @@ def edit_income():
                             user.savings[i].setAmount(income['amount'])
                             user.savings[i].setDate(income['date'])
                             user.savings[i].setIsConsistent(income['isConsistent'])
+                            user.updateTotalSavings(income['amount']-income['oldAmount'])
                             break
                 else:
                     for i in range(0, len(user.income)):
@@ -318,6 +322,7 @@ def edit_income():
                             user.income[i].setAmount(income['amount'])
                             user.income[i].setDate(income['date'])
                             user.income[i].setIsConsistent(income['isConsistent'])
+                            user.updateTotalIncome(income['amount']-income['oldAmount'])
                             break
             user_dict = user.as_dict()
             updates = {

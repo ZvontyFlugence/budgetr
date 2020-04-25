@@ -17,7 +17,7 @@ class Category():
 
     def addExpense(self, expense):
         self.expenses.append(expense)
-        self.spent += expense.amount
+        self.spent += expense.getAmount()
 
     def removeExpense(self, expense):
         try:
@@ -41,6 +41,9 @@ class Category():
 
     def getSpent(self):
         return self.spent
+
+    def updateSpent(self, amount):
+        self.spent += amount;
 
     def getExpenses(self):
         return self.expenses

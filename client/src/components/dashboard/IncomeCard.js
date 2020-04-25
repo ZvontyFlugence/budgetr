@@ -11,12 +11,12 @@ export default function IncomeCard(props) {
 
   const activeIncome = props.income;
   const [showEditIncomeModal, setShowEditIncomeModal] = useState(false);
-  const [editIncomeData, setEditIncomeData] = useState({ name: '', amount: 0.00, date: activeIncome.date, isConsistent: activeIncome.isConsistent, isSavings: activeIncome.isSavings })
+  const [editIncomeData, setEditIncomeData] = useState({ name: '', amount: 0.00, date: '', isConsistent: activeIncome.isConsistent, isSavings: activeIncome.isSavings })
   const eventKey = (!props.income.isSavings) ? 'income' : 'savings';
-  const display_date = activeIncome ? new Date(Date.parse(activeIncome.date[0].replace(/-/g, '/'))) : Date.now();
+  const display_date = activeIncome ? new Date(Date.parse(activeIncome.date.toString().replace(/-/g, '/'))) : Date.now();
 
   const submitEditIncome = () => {
-    let oldName = activeIncome.name;
+    let oldName = activeIncome.name;  
     let oldAmount = activeIncome.amount;
     let oldIsSavings = activeIncome.isSavings;
     fetch(`${process.env.REACT_APP_API_URL}/edit-income`, {
@@ -28,7 +28,7 @@ export default function IncomeCard(props) {
       body: JSON.stringify({
         name: editIncomeData.name || oldName,
         amount: editIncomeData.amount || oldAmount,
-        date: editIncomeData.date[0] || activeIncome.date,
+        date: editIncomeData.date || activeIncome.date,
         isConsistent: editIncomeData.isConsistent,
         isSavings: editIncomeData.isSavings,
         oldName,
