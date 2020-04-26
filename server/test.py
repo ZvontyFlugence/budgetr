@@ -54,7 +54,20 @@ class TestUserModel(unittest.TestCase):
         user.removeIncome(0, False)
         self.assertEqual(len(user.income), 0)
         self.assertAlmostEqual(user.getUserTotalIncome(), 0)
+        
+    def test_user_updates(self):
+        hashedpw = bcrypt.hashpw('test'.encode('ascii'), bcrypt.gensalt())
+        user = User(1, 'UnitTest', 'unittest@budgetr.com', hashedpw)
+        user.setUsername('UnitTestUpdate')
+        user.setEmail('unittestupdate@budgetr.com')
+        user.setPassword('testupdatepw')
+        self.assertEqual(user.getUserUserName(), 'UnitTestUpdate')
+        self.assertAlmostEqual(user.getUserEmail(), 'unittestupdate@budgetr.com')
+        self.assertTrue(bcrypt.checkpw('testupdatepw'.encode('ascii'), user.password))
 
+    
+   
+    
 if __name__ == '__main__':
     unittest.main()
 
